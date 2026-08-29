@@ -101,6 +101,70 @@ hr { border-color: #22407a; }
 /* Tabs */
 button[data-baseweb="tab"] { color: #cdd9ff; }
 button[data-baseweb="tab"][aria-selected="true"] { color: #ffffff; border-bottom-color: #1657ff; }
+
+/* ------------------------------------------------------------------ */
+/* Controles de formulario (selectbox, number_input, text_input, etc.) */
+/* Streamlit/BaseWeb los pinta con fondo blanco por defecto; hay que    */
+/* forzar fondo oscuro + texto blanco para que no se vean "en blanco". */
+/* ------------------------------------------------------------------ */
+
+/* Caja visible del selectbox (BaseWeb Select) */
+div[data-baseweb="select"] > div {
+    background-color: #0d1b3e !important;
+    border: 1px solid #22407a !important;
+    color: #ffffff !important;
+}
+div[data-baseweb="select"] * {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+}
+
+/* Menú desplegable del selectbox (se inyecta en un portal, fuera del sidebar) */
+ul[role="listbox"], div[data-baseweb="popover"] {
+    background-color: #0d1b3e !important;
+}
+ul[role="listbox"] li, div[data-baseweb="popover"] * {
+    background-color: #0d1b3e !important;
+    color: #ffffff !important;
+}
+ul[role="listbox"] li:hover, ul[role="listbox"] li[aria-selected="true"] {
+    background-color: #1657ff !important;
+    color: #ffffff !important;
+}
+
+/* text_input y number_input */
+.stTextInput input,
+.stNumberInput input,
+div[data-baseweb="input"] input,
+div[data-baseweb="input"] {
+    background-color: #0d1b3e !important;
+    color: #ffffff !important;
+    border: 1px solid #22407a !important;
+    caret-color: #ffffff !important;
+}
+.stTextInput input::placeholder,
+.stNumberInput input::placeholder {
+    color: #7fa8ff !important;
+    opacity: 1 !important;
+}
+
+/* Botones +/- del number_input */
+.stNumberInput button, button[data-testid="stNumberInputStepUp"], button[data-testid="stNumberInputStepDown"] {
+    background-color: #111f4d !important;
+    border: 1px solid #22407a !important;
+}
+.stNumberInput button svg, button[data-testid="stNumberInputStepUp"] svg, button[data-testid="stNumberInputStepDown"] svg {
+    fill: #ffffff !important;
+}
+
+/* Slider */
+div[data-baseweb="slider"] div { color: #ffffff !important; }
+
+/* Tooltip de ayuda (icono "?") */
+div[data-testid="stTooltipIcon"] svg { fill: #7fa8ff !important; }
+
+/* Radio / checkbox labels */
+.stRadio label, .stCheckbox label { color: #f5f7ff !important; }
 </style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
