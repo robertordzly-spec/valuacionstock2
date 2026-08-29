@@ -108,22 +108,32 @@ button[data-baseweb="tab"][aria-selected="true"] { color: #ffffff; border-bottom
 /* forzar fondo oscuro + texto blanco para que no se vean "en blanco". */
 /* ------------------------------------------------------------------ */
 
-/* Caja visible del selectbox (BaseWeb Select) */
-div[data-baseweb="select"] > div {
+/* Caja visible del selectbox (BaseWeb Select) — pintar TODOS los niveles
+   internos, no solo el div hijo directo, porque BaseWeb anida varios divs
+   y el que trae el fondo blanco real puede estar 2-3 niveles más adentro. */
+div[data-baseweb="select"],
+div[data-baseweb="select"] > div,
+div[data-baseweb="select"] div {
     background-color: #0d1b3e !important;
-    border: 1px solid #22407a !important;
-    color: #ffffff !important;
+    border-color: #22407a !important;
 }
+div[data-baseweb="select"],
 div[data-baseweb="select"] * {
     color: #ffffff !important;
     fill: #ffffff !important;
 }
 
 /* Menú desplegable del selectbox (se inyecta en un portal, fuera del sidebar) */
-ul[role="listbox"], div[data-baseweb="popover"] {
+div[data-baseweb="popover"],
+div[data-baseweb="popover"] div,
+div[data-baseweb="menu"],
+div[data-baseweb="menu"] div,
+ul[role="listbox"] {
     background-color: #0d1b3e !important;
 }
-ul[role="listbox"] li, div[data-baseweb="popover"] * {
+div[data-baseweb="popover"] *,
+div[data-baseweb="menu"] *,
+ul[role="listbox"] li {
     background-color: #0d1b3e !important;
     color: #ffffff !important;
 }
@@ -425,7 +435,10 @@ orden_filas = [
 
 tabla = pd.DataFrame({tk: {k: resultados[tk][k] for k in orden_filas} for tk in resultados})
 
-tabla_fmt = tabla.copy()
+# dtype=object desde el inicio: tabla_fmt guardará texto (ej. "23.95%"), no
+# floats, y asignar strings sobre columnas float lanza TypeError en pandas
+# recientes ("Invalid value ... for dtype float64").
+tabla_fmt = pd.DataFrame(index=tabla.index, columns=tabla.columns, dtype=object)
 filas_pct = ["Rentabilidad anualizada", "Volatilidad anualizada", "CAPM", "Alpha",
              "Intervalo Confianza", "Nivel Significancia", "VaR %"]
 filas_num = ["iSharpe", "Coef. Correlación Pearson", "BETA", "iTraynor", 'Valor "z"']
