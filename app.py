@@ -142,6 +142,51 @@ ul[role="listbox"] li:hover, ul[role="listbox"] li[aria-selected="true"] {
     color: #ffffff !important;
 }
 
+/* Selectbox en versiones recientes de Streamlit (combobox basado en
+   react-aria, sin atributos data-baseweb). El cuadro visible es un
+   <input role="combobox"> dentro de un <div role="group">, y el botón
+   de la flecha es un <button aria-label="Open">. */
+div[data-testid="stSelectbox"] div[role="group"],
+div.react-aria-ComboBox div[role="group"] {
+    background-color: #0d1b3e !important;
+    border: 1px solid #22407a !important;
+    border-radius: 8px;
+}
+div[data-testid="stSelectbox"] input[role="combobox"] {
+    background-color: #0d1b3e !important;
+    color: #ffffff !important;
+    caret-color: #ffffff !important;
+}
+div[data-testid="stSelectbox"] button[aria-label="Open"],
+div[data-testid="stSelectbox"] button[aria-label="Close"] {
+    background-color: #0d1b3e !important;
+}
+div[data-testid="stSelectbox"] button svg {
+    fill: #ffffff !important;
+}
+
+/* Menú desplegable del combobox react-aria: se monta en un portal fuera
+   del sidebar (normalmente al final de <body>), por eso NO se puede
+   limitar el selector a section[data-testid="stSidebar"]. */
+div[role="listbox"] {
+    background-color: #0d1b3e !important;
+    border: 1px solid #22407a !important;
+    border-radius: 8px;
+}
+div[role="listbox"] div[role="option"] {
+    background-color: #0d1b3e !important;
+    color: #ffffff !important;
+}
+div[role="listbox"] div[role="option"] * {
+    color: #ffffff !important;
+}
+div[role="listbox"] div[role="option"]:hover,
+div[role="listbox"] div[role="option"][aria-selected="true"],
+div[role="listbox"] div[role="option"][data-focused="true"] {
+    background-color: #1657ff !important;
+    color: #ffffff !important;
+}
+
 /* text_input y number_input */
 .stTextInput input,
 .stNumberInput input,
